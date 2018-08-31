@@ -1,0 +1,22 @@
+{
+  "name": "blend-sourcemaps",
+  "version": "1.0.2",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^10.9.3",
+    "acorn": "^5.7.2",
+    "escodegen": "^1.11.0",
+    "fuse-box": "^3.5.0",
+    "source-map": "^0.7.3",
+    "typescript": "^3.0.3"
+  },
+  "devDependencies": {
+    "fuse-test-runner": "^1.0.16"
+  }
+}
