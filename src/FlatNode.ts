@@ -24,9 +24,7 @@ export class FlatNodes {
 		this.generate(original, modified);
 	}
 
-	public eachOriginalNode(
-		fn: (original: IFlatNode, modified: IFlatNode) => void
-	) {
+	public eachOriginalNode(fn: (original: IFlatNode, modified: IFlatNode) => void) {
 		let successIndex = 0;
 		this.original.forEach((item, index) => {
 			const found = this.modified.find((mod, index) => {
@@ -41,7 +39,6 @@ export class FlatNodes {
 	}
 
 	private prepareNode(node): IFlatNode {
-		
 		const args = [];
 		if (node.object) {
 			args.push("object");
@@ -83,7 +80,7 @@ export class FlatNodes {
 		if (node.value) {
 			args.push(`v:${node.value}`);
 		}
-		
+
 		if (typeof node.name === "string") {
 			args.push(`name:${node.name}`);
 		} else {

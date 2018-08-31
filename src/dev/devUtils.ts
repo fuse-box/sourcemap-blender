@@ -17,9 +17,6 @@ const tsconfig: any = {
 	}
 };
 
-
-
-
 export function writeTestIndex(input: { source: string; maps: string }) {
 	const content = `
     <!doctype html>

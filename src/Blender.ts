@@ -65,12 +65,8 @@ export class Blender {
 						if (sm.line) {
 							map.addMapping({
 								generated: {
-									line: isStart
-										? modified.loc.start.line
-										: modified.loc.end.line,
-									column: isStart
-										? modified.loc.start.column
-										: modified.loc.end.column
+									line: isStart ? modified.loc.start.line : modified.loc.end.line,
+									column: isStart ? modified.loc.start.column : modified.loc.end.column
 								},
 								source: sourceName,
 								original: {

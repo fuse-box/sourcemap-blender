@@ -1,1 +1,1 @@
-console.log(1);
+export { Blender } from "./Blender";

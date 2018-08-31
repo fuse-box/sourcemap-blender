@@ -1,6 +1,6 @@
 import { transpileCode, acornParse } from "../dev/devUtils";
 import { Blender } from "../Blender";
-import { should } from 'fuse-test-runner';
+import { should } from "fuse-test-runner";
 
 interface Opts {
 	originalCode: string;
@@ -12,16 +12,13 @@ export class TestBlender {
 	public static async init(opts: Opts) {
 		const test = new TestBlender(opts);
 		const response = await test.run();
-		
+
 		return test;
 	}
 
-	shouldMatchMapping(mapping : string){
-		
-		const map = JSON.parse(this.response)
-		// AAAA,IAAM,QAAQ;AACd,QAAQ,IAAI;AACZ,QAAQ,IAAI
-		// AAAA,MAAM,QAAQ;AACd,QAAQ,IAAI;AACZ,QAAQ,IAAI
-		should(map.mappings).equal(mapping)
+	shouldMatchMapping(mapping: string) {
+		const map = JSON.parse(this.response);
+		should(map.mappings).equal(mapping);
 	}
 
 	private async run(): Promise<string> {
