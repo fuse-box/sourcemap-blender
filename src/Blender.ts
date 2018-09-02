@@ -18,13 +18,20 @@ export class Blender {
 		}
 	}
 
-	public async blend() {
+	public async blend(opts?: { sourceMappingURL?: string | boolean }) {
+		opts = opts || {};
 		let code = this.input.modifiedCode;
 		const newMap = await this.start();
-		code += `\n//# sourceMappingURL=module.js.map`;
+		if (opts.sourceMappingURL) {
+			if (opts.sourceMappingURL === true) {
+				code += `\n//# sourceMappingURL=module.js.map`;
+			} else {
+				code += `\n//# sourceMappingURL=${opts.sourceMappingURL}`;
+			}
+		}
+
 		return {
 			map: newMap,
-			original: JSON.stringify(this.input.originalMap, null, 2),
 			code: code
 		};
 	}

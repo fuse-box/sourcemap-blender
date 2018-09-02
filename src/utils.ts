@@ -18,7 +18,7 @@ export function visit(ast, fn) {
 		if (!node || typeof node.type !== "string") {
 			return;
 		}
-		if (node._visited) {
+		if (node.__nodeVisited) {
 			return;
 		}
 		node.$parent = parent;
@@ -26,7 +26,7 @@ export function visit(ast, fn) {
 		node.$idx = idx;
 		let res = undefined;
 		res = fn(node, parent, prop, idx);
-		node._visited = true;
+		node.__nodeVisited = true;
 		if (typeof res === "object" && res.type) {
 			return visit(res, null);
 		}

@@ -1,22 +1,22 @@
 {
-	"name": "blend-sourcemaps",
-	"version": "1.0.2",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"test": "node fuse test"
-	},
-	"author": "",
-	"license": "ISC",
-	"dependencies": {
-		"source-map": "^0.7.3"
-	},
-	"devDependencies": {
-		"escodegen": "^1.11.0",
-		"@types/node": "^10.9.3",
-		"typescript": "^3.0.3",
-		"fuse-box": "^3.5.0",
-		"acorn": "^5.7.2",
-		"fuse-test-runner": "^1.0.16"
-	}
+  "name": "sourcemap-blender",
+  "version": "1.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node fuse test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "source-map": "^0.7.3"
+  },
+  "devDependencies": {
+    "escodegen": "^1.11.0",
+    "@types/node": "^10.9.3",
+    "typescript": "^3.0.3",
+    "fuse-box": "^3.5.0",
+    "acorn": "^5.7.2",
+    "fuse-test-runner": "^1.0.16"
+  }
 }

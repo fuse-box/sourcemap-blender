@@ -12,7 +12,6 @@ export interface IFlatNode {
 		start: ILocation;
 		end: ILocation;
 	};
-	args: Array<string>;
 }
 
 export class FlatNodes {
@@ -40,62 +39,33 @@ export class FlatNodes {
 
 	private prepareNode(node): IFlatNode {
 		const args = [];
-		if (node.object) {
-			args.push("object");
-		}
-		if (node.callee) {
-			args.push("callee");
-		}
-		if (node.body) {
-			args.push("body");
-		}
-		if (node.property) {
-			args.push("property");
-		}
-		if (node.arguments) {
-			args.push("arguments");
-		}
-		if (node.kind) {
-			args.push("kind");
-		}
-		if (node.method) {
-			args.push("method");
-		}
-		if (node.shorthand) {
-			args.push("shorthand");
-		}
-		if (node.computed) {
-			args.push("computed");
-		}
-		if (node.expression) {
-			args.push("expression");
-		}
-		if (node.type) {
-			args.push(`type:${node.type}`);
-		}
-		if (node.$prop) {
-			args.push(`prop:${node.$prop}`);
-		}
-
-		if (node.value) {
-			args.push(`v:${node.value}`);
-		}
-
+		let i = 0;
+		if (node.object) args.push("a");
+		if (node.callee) args.push("b");
+		if (node.body) args.push("c");
+		if (node.property) args.push("d");
+		if (node.arguments) args.push("f");
+		if (node.kind) args.push("g");
+		if (node.method) args.push("h");
+		if (node.shorthand) args.push("i");
+		if (node.computed) args.push("g");
+		if (node.expression) args.push("k");
+		if (node.type) args.push(`l:${node.type}`);
+		if (node.$prop) args.push(`m:${node.$prop}`);
+		if (node.value) args.push(`n:${node.value}`);
 		if (typeof node.name === "string") {
-			args.push(`name:${node.name}`);
+			args.push(`o:${node.name}`);
 		} else {
-			args.push(`name`);
+			args.push(`o`);
 		}
 		if (typeof node.kind === "string") {
-			args.push(`kind:${node.kind}`);
+			args.push(`p:${node.kind}`);
 		}
 		const relativeID = fastHash(args.join(":"));
-
 		return {
 			relativeId: relativeID as string,
 			type: node.type,
-			loc: node.loc,
-			args: args
+			loc: node.loc
 		};
 	}
 
