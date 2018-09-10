@@ -1,0 +1,155 @@
+
+
+throw new Error('source-maps-test-3');
+
+@styled('app', styles)
+export class CuaApp extends LitElement {
+  @property(Boolean)
+  public authReady: boolean = false;
+
+  @property(String)
+  public detailsId?: string;
+
+  @property(String)
+  public fragment?: string;
+
+  @property(Boolean)
+  public loading: boolean = true;
+
+  private store: Store | undefined;
+
+  public _render({ authReady, detailsId, loading, fragment }: this) {
+    return html`
+      <div id="pages" hidden="${detailsId !== undefined}">
+        <cua-organizations
+          hidden="${fragment !== Fragment.Organizations}">
+        </cua-organizations>
+        <cua-vehicles
+          hidden="${fragment !== Fragment.Vehicles}">
+        </cua-vehicles>
+        <cua-vehicles-table
+          hidden="${fragment !== Fragment.VehiclesTable}">
+        </cua-vehicles-table>
+        <cua-team-table
+          hidden="${fragment !== Fragment.TeamTable}">
+        </cua-team-table>
+        <cua-roles-table
+          hidden="${fragment !== Fragment.RolesTable}">
+        </cua-roles-table>
+        <cua-tags-table
+          hidden="${fragment !== Fragment.TagsTable}">
+        </cua-tags-table>
+        <cua-ddd-table
+          hidden="${fragment !== Fragment.DDDTable}">
+        </cua-ddd-table>
+        <cua-devices-table
+          hidden="${fragment !== Fragment.DevicesTable}">
+        </cua-devices-table>
+        <cua-errands-table
+          hidden="${fragment !== Fragment.ErrandsTable}">
+        </cua-errands-table>
+
+        <cua-chat></cua-chat>
+
+        <cua-menu></cua-menu>
+      </div>
+      <div id="details" hidden="${detailsId === undefined}">
+        <cua-devices-details
+          hidden="${fragment !== Fragment.DevicesDetails}">
+        </cua-devices-details>
+        <cua-vehicles-details
+          hidden="${fragment !== Fragment.VehiclesDetails}">
+        </cua-vehicles-details>
+        <cua-team-details
+          hidden="${fragment !== Fragment.TeamDetails}">
+        </cua-team-details>
+        <cua-tags-details
+          hidden="${fragment !== Fragment.TagsDetails}">
+        </cua-tags-details>
+        <cua-errands-details
+          hidden="${fragment !== Fragment.ErrandsDetails}">
+        </cua-errands-details>
+        <cua-roles-details
+          hidden="${fragment !== Fragment.RolesDetails}">
+        </cua-roles-details>
+      </div>
+
+      <cua-dialog-controller></cua-dialog-controller>
+
+      <cua-auth></cua-auth>
+
+      <cua-loader-overlay
+        visible$="${authReady === false || loading}">
+      </cua-loader-overlay>
+    `;
+  }
+  public async _firstRendered() {
+    await this.initializeFirebase();
+    await this.initializeCoreService();
+    await this.initializeStoreSubscription();
+    await this.initializeAuth();
+    await this.importComponents();
+    await this.initializeMessaging();
+  }
+
+  private async initializeFirebase() {
+    const firebase = await import('firebase/app');
+
+    firebase.initializeApp({
+      apiKey: 'AIzaSyA2fS9X80xG4udM_u7py33RYVu6Q7Lm5p8',
+      authDomain: 'com-uniheap-app.firebaseapp.com',
+      messagingSenderId: '1097271883646',
+      projectId: 'com-uniheap-app',
+      storageBucket: 'com-uniheap-app.appspot.com',
+    });
+  }
+
+  private async initializeCoreService() {
+    const [{ store }] = await Promise.all([
+      import('../store'),
+      import('../fragments/app'),
+      import('../fragments/auth'),
+      import('../fragments/user'),
+    ]);
+
+    this.store = store;
+  }
+
+  private initializeStoreSubscription() {
+    const { store } = this;
+    if (store === undefined) {
+      throw new Error('Store must be initialized first.');
+    } else {
+      store.subscribe(() => {
+        const state = store.getState();
+        this.loading = getLoading(state);
+        this.fragment = getFragment(state);
+        this.detailsId = getDetailsId(state);
+      });
+    }
+  }
+
+  private async initializeAuth() {
+    const { store } = this;
+    if (store === undefined) {
+      throw new Error('Store must be initialized first.');
+    } else {
+      const unsubscribe = store.subscribe(() => {
+        if (getUser(store.getState()) !== undefined) {
+          this.authReady = true;
+          unsubscribe();
+        }
+      });
+    }
+
+    await import('./cua-auth');
+  }
+
+  private async importComponents() {
+    await import('./cua-menu');
+  }
+
+  private async initializeMessaging() {
+    await import('../fragments/messaging');
+  }
+}

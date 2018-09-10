@@ -10,7 +10,7 @@ const tsconfig: any = {
 		target: "es5",
 		sourceMap: true,
 		inlineSources: true,
-		importHelpers: true,
+		//importHelpers: true,
 		lib: ["es2015"],
 		emitDecoratorMetadata: true,
 		experimentalDecorators: true
@@ -26,6 +26,7 @@ export function writeTestIndex(input: { source: string; maps: string }) {
 </head>
 
 <body>
+		<script>window.exports = {}</script>
     <script type="text/javascript" src="/module.js"></script>
 </body>
 

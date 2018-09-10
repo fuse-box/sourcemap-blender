@@ -8,6 +8,7 @@ export class Blender {
 	constructor(
 		public input: {
 			parse: (content) => void;
+			sourceName: string;
 			originalMap: any;
 			originalAST: any;
 			modifiedCode: string;
@@ -49,13 +50,17 @@ export class Blender {
 		const data = [];
 		let map, sourceName;
 		let newSourceMap;
+		let newSourceName = this.input.sourceName;
 		await SourceMapConsumer.with(this.input.originalMap, null, consumer => {
 			sourceName = consumer.sources[0];
+			if (!newSourceName) {
+				newSourceName = sourceName;
+			}
 			map = new SourceMapGenerator({
-				file: sourceName
+				file: newSourceName
 			});
 
-			map.setSourceContent(sourceName, consumer.sourceContentFor(sourceName)),
+			map.setSourceContent(newSourceName, consumer.sourceContentFor(sourceName)),
 				this.flat.eachOriginalNode((original, modified) => {
 					let isStart = true;
 					let sm = consumer.originalPositionFor({
@@ -75,7 +80,7 @@ export class Blender {
 									line: isStart ? modified.loc.start.line : modified.loc.end.line,
 									column: isStart ? modified.loc.start.column : modified.loc.end.column
 								},
-								source: sourceName,
+								source: newSourceName,
 								original: {
 									line: sm.line,
 									column: sm.column
